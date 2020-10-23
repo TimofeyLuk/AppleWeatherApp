@@ -64,7 +64,7 @@
                 <outlet property="weatherImage" destination="sNf-dU-Wrv" id="l3v-tb-GjS"/>
                 <outlet property="weekdayLabel" destination="oXD-mC-7np" id="hG9-PH-hNA"/>
             </connections>
-            <point key="canvasLocation" x="65.217391304347828" y="72.321428571428569"/>
+            <point key="canvasLocation" x="-17" y="9"/>
         </tableViewCell>
     </objects>
     <resources>

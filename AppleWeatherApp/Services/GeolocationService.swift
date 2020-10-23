@@ -11,11 +11,18 @@ import CoreLocation
 protocol GeolocationSevice {
     var lat: Int {get}
     var lon: Int {get}
+    var subscribers: [GeolocationSeviceUpdateSubscriber] {get set}
 }
 
-class Geolocator:NSObject, GeolocationSevice, CLLocationManagerDelegate {
+protocol GeolocationSeviceUpdateSubscriber {
+    func lokationDidUpdate()
+}
+
+
+class Geolocator: NSObject, GeolocationSevice, CLLocationManagerDelegate {
     var lat: Int = 0
     var lon: Int = 0
+    var subscribers: [GeolocationSeviceUpdateSubscriber] = []
     
     var locationManager = CLLocationManager()
     

@@ -20,6 +20,9 @@ class TenDaysCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource {
         return table
     }()
     
+    weak var forecast: Forecast?
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -52,9 +55,26 @@ class TenDaysCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource {
         return 5
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 26
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = table.dequeueReusableCell(withIdentifier: "dayTableCell", for: indexPath) as! DayTableViewCell
-        cell.backgroundColor = .clear
+        let cell = table.dequeueReusableCell(withIdentifier: "dayTableCell", for: indexPath)
+        
+        if let cellCopy = cell as? DayTableViewCell{
+            cellCopy.weekdayLabel.text = getDayName(index: indexPath.row + 2)
+            if forecast?.data != nil {
+                let key = (Array((forecast!.data!.keys)).map({ String($0)}))[indexPath.row]
+                let dayData = forecast?.data?[key]
+                
+                cellCopy.maxtemp.text = "\(Int(dayData??.first?.main?.temp_max ?? 0))"
+                cellCopy.minTemp.text = "\(Int(dayData??.first?.main?.temp_min ?? 0))"
+                cellCopy.weatherImage.image = forecast?.images?[dayData??.first?.weather?.first?.icon ?? ""]
+            }
+            cell.backgroundColor = .clear
+        }
+        
         return cell
     }
     

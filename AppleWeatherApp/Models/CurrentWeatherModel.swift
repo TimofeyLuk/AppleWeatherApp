@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct CurrentWeatherData: Decodable {
     var coord: Coord?
@@ -22,6 +23,27 @@ struct CurrentWeatherData: Decodable {
     var id: Int?
     var name: String?
     var cod: Int?
+    
+    mutating func setData(_ forecastData: MainForecastData?) {
+        if let data = forecastData {
+            name = data.name
+            weather = [Weather()]
+            weather?[0].description = data.weatherDescription
+            main = Main(temp: data.temp,
+                        feels_like: data.feels_like,
+                        temp_min: data.minTemp,
+                        temp_max: data.maxTemp,
+                        pressure: Int(data.pressure),
+                        humidity: Int(data.humidity))
+           
+            wind = Wind(speed: data.windSpeed, deg: nil)
+            clouds = Clouds(all: Int(data.clouds))
+            sys = Sys(type: nil, id: nil, country: nil,
+                      sunrise: Int(data.sunrise),
+                      sunset: Int(data.sunset))
+            visibility = Int(data.visibility)
+        }
+    }
 }
 
 struct Coord: Decodable {

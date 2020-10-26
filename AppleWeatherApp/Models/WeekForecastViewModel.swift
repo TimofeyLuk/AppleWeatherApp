@@ -14,6 +14,8 @@ class Forecast {
     var data: [String:[ForecastElement]?]?
     var images: [String: UIImage]?
     
+    init() {}
+    
     init(forecast: WeekForecast) {
         city = forecast.city
         data = [:]
@@ -40,6 +42,24 @@ class Forecast {
                 }
             }
         }
+    }
+    
+    func getTwoDatsInfo() -> [ForecastElement]? {
+        if let forecast = self.data {
+            let keys = Array((forecast.keys)).map({ String($0)})
+            let firstDayKey = keys[0]
+            let secodDayKey = keys[1]
+            var res:[ForecastElement] = []
+            
+            let firstArr = forecast[firstDayKey]?! ?? Array<ForecastElement>()
+            let secondArr = forecast[secodDayKey]?! ?? Array<ForecastElement>()
+            
+            res += firstArr
+            res += secondArr
+            
+            return res
+        }
+        return nil
     }
 }
 

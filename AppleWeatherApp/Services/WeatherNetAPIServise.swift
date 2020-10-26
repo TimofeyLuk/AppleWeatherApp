@@ -17,6 +17,7 @@ protocol WeatherNetAPIService {
 
 
 class OpenWeatherAPIService: WeatherNetAPIService {
+    
     var currentLocation: GeolocationSevice!
     
     required init(location: GeolocationSevice) {

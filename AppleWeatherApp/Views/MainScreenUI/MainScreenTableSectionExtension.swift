@@ -7,7 +7,8 @@
 
 import UIKit
 
-// Mark:
+// Mark: UICollection extensions
+
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -49,39 +50,20 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hourInfo", for: indexPath)
         if let cellCopy = cell as? HourInfoCell {
             if ((presenter?.weekForecast?.data) != nil) {
-                let data = getDataArr()
+                let data = presenter.weekForecast?.getTwoDatsInfo()
                 if let cellData = data?[indexPath.row] {
                     cellCopy.timeLabel.text = cellData.time ?? ""
                     if indexPath.row == 0 {
                         cellCopy.timeLabel.text = "Now"
                     }
                     cellCopy.weatherImage.image = presenter!.weekForecast?.images?[cellData.weather?.first?.icon ?? ""]
-                    cellCopy.temperatureLabel.text = "\(cellData.main?.temp ?? 0)°"
+                    cellCopy.temperatureLabel.text = "\(Int(cellData.main?.temp ?? 0))°"
                     cellCopy.probabilityOfPrecipitationLabel.text = ""
                 }
             }
         }
         
         return cell
-    }
-    
-    private func getDataArr() -> [ForecastElement]? {
-        if let forecast = presenter.weekForecast?.data {
-            let keys = Array((forecast.keys)).map({ String($0)})
-            let firstDayKey = keys[0]
-            let secodDayKey = keys[1]
-            var res:[ForecastElement] = []
-            
-            let firstArr = forecast[firstDayKey]?! ?? Array<ForecastElement>()
-            let secondArr = forecast[secodDayKey]?! ?? Array<ForecastElement>()
-            
-            res += firstArr
-            res += secondArr
-            
-            return res
-        }
-        
-        return nil
     }
     
     func createDayColectionView() -> UICollectionView {

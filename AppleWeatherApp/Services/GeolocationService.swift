@@ -42,8 +42,10 @@ class Geolocator: NSObject, GeolocationSevice, CLLocationManagerDelegate {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         lat = Int(locValue.latitude)
         lon = Int(locValue.longitude)
-        
-        // MARK: Call UI and date update
+       
+        for sub in subscribers {
+            sub.lokationDidUpdate()
+        }
         
     }
     

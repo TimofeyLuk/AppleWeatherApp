@@ -11,8 +11,8 @@ extension MainViewController {
     // MARK: - Network
     
     func currentForecastSucces() {
-        locationLabel.text = presenter.currentForecast?.name ?? ""
-        weatherDescription.text = presenter.currentForecast?.weather?.first?.description ?? ""
+        locationLabel.text = presenter?.currentForecast?.name ?? ""
+        weatherDescription.text = presenter?.currentForecast?.weather?.first?.description ?? ""
     }
     
     func currentForecastFailure(error: Error) {
@@ -27,7 +27,7 @@ extension MainViewController {
         showConnectionAlert(error: error, message: "Please connect to the Internet. After pressing \"reconnect\" button, application will try to connect again")
     }
     
-    func ImageSucces(image: UIImage?) {
+    func ImageSucces() {
         weatherTable.reloadData()
     }
     
@@ -45,5 +45,5 @@ extension MainViewController {
         errorMessage.addAction(ok)
         self.present(errorMessage, animated: true, completion: nil)
     }
-
+    
 }

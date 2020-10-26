@@ -34,6 +34,15 @@ class MainViewController: UIViewController, MainViewProtocol, UITableViewDelegat
         
         let additionalInfoNib = UINib(nibName: "AdditionalInfoCell", bundle: nil)
         weatherTable.register(additionalInfoNib, forCellReuseIdentifier: "AdditionalInfoCell")
+        
+        if presenter?.currentForecast != nil {
+            locationLabel.text = presenter?.currentForecast?.name
+            weatherDescription.text = presenter?.currentForecast?.weather?.first?.description
+            weatherTable.reloadData()
+        }
+        if presenter?.weekForecast != nil {
+            weatherTable.reloadData()
+        }
     }
     
     func shiftTopView() {
